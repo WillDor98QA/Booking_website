@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Kreation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="Screenshot 2025-01-02 at 10.58.33 AM.png" />
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-black text-white p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo and Brand Name -->
+            <div class="flex items-center space-x-3">
+                <div class="logo-container">
+                    <img src="Screenshot 2025-01-02 at 10.58.33 AM.png" alt="Crown & Glory Logo" class="w-12 h-12 object-contain">
+                </div>
+                <h1 class="text-2xl font-bold">Crown Kreation</h1>
+            </div>
+            
+            <!-- Desktop Menu - right-aligned -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#services" class="hover:text-purple-200 transition-colors duration-200">Services</a>
+                <a href="#booking" class="hover:text-purple-200 transition-colors duration-200">Book Now</a>
+                <a href="#contact" class="hover:text-purple-200 transition-colors duration-200">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button - right-aligned -->
+            <button class="md:hidden mobile-menu" id="menuButton">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div class="mobile-menu-dropdown hidden bg-black mt-4 p-4" id="mobileMenu">
+            <a href="#services" class="block py-2">Services</a>
+            <a href="#booking" class="block py-2">Book Now</a>
+            <a href="#contact" class="block py-2">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-purple-100 py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Expert Hair Braiding & Sales</h2>
+            <p class="text-xl mb-8">Transform your look with our professional braiding services</p>
+            <a href="#booking" class="bg-black text-white px-8 py-3 rounded-full hover:bg-purple-800">Book Appointment</a>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="service-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Braiding Styles</h3>
+                    <ul class="space-y-2">
+                        <li>Box Braids</li>
+                        <li>Faux locs</li>
+                        <li>Goddess Braids</li>
+                        <li>Knotless Braids</li>
+                    </ul>
+                </div>
+                <div class="service-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Hair Sales</h3>
+                    <ul class="space-y-2">
+                        <li>Premium Braiding Hair</li>
+                        <li>Human Hair Extensions</li>
+                        <li>Accessories</li>
+                    </ul>
+                </div>
+                <div class="service-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Other Services</h3>
+                    <ul class="space-y-2">
+                        <li>Wig Making</li>
+                        <li>Hair Revamp</li>
+                        <li>Reconstruction</li>
+                        <li>Ventilation</li>
+                        <li>Closure/Frontal Replacement</li>
+                        <li>Pony Tail</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="bg-purple-100 py-16">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
+            <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+                <form id="bookingForm" class="space-y-4">
+                    <div>
+                        <label class="block mb-2">Name</label>
+                        <input type="text" name="name" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Email</label>
+                        <input type="email" name="email" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Service</label>
+                        <select name="service" class="form-input w-full p-2 border rounded" required>
+                            <option value="">Select a service</option>
+                            <option>Box Braids</option>
+                            <option>Faux locs</option>
+                            <option>Goddess Braids</option>
+                            <option>Knotless Braids</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Size</label>
+                        <select name="service" class="form-input w-full p-2 border rounded" required>
+                            <option value="">Select a size</option>
+                            <option>Jumbo</option>
+                            <option>Medium</option>
+                            <option>Small</option>
+                            <option>Extra Small</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Preferred Date</label>
+                        <input type="date" name="date" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Preferred Time</label>
+                        <input type="time" name="time" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <button type="submit" class="w-full bg-black text-white py-3 rounded hover:bg-purple-800">
+                        <span>Book Now</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
+            <div class="max-w-lg mx-auto">
+                <p class="mb-4">Location: Pokuase</p>
+                <p class="mb-4">Phone: (233) 55-644-8641/ 20-396-1506</p>
+                <p class="mb-4">Email: owusucobbinamary@gmail.com</p>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold mb-4">Hours of Operation</h3>
+                    <p>Saturdays, Sundays and Holidays: 9:00 AM - 7:00 PM</p>
+                    <p>Weekdays: Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Crown Kreation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
