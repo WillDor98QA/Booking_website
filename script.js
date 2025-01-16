@@ -71,8 +71,17 @@ function showToast(message, type = 'success') {
 }
 
 // Date input validation
-const dateInput = bookingForm.querySelector('input[name="date"]');
-dateInput.min = new Date().toISOString().split('T')[0];
+const dateInput = document.querySelector('input[type="date"]');
+
+dateInput.addEventListener('change', (e) => {
+  const selectedDate = new Date(e.target.value);
+  const dayOfWeek = selectedDate.getDay();
+  
+  if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+    alert('Please select only Saturday or Sunday');
+    e.target.value = ''; // Clear invalid selection
+  }
+});
 
 // Time input validation
 const timeInput = bookingForm.querySelector('input[name="time"]');
@@ -80,9 +89,9 @@ timeInput.addEventListener('change', (e) => {
     const time = e.target.value;
     const [hours, minutes] = time.split(':').map(Number);
     
-    // Validate business hours (9 AM - 7 PM)
-    if (hours < 9 || hours >= 19) {
-        showToast('Please select a time between 9:00 AM and 7:00 PM', 'error');
+    // Validate business hours (7 AM - 7 PM)
+    if (hours < 7 || hours >= 19) {
+        showToast('Please select a time between 7:00 AM and 7:00 PM', 'error');
         e.target.value = '';
     }
 });

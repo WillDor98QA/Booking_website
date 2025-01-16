@@ -91,19 +91,38 @@
         </div>
     </section>
 
-    <!-- Booking Section -->
-    <section id="booking" class="bg-purple-100 py-16">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
-            <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-                <form id="bookingForm" class="space-y-4">
+<!-- Booking Section -->
+<section id="booking" class="bg-purple-100 py-16">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+            <form id="bookingForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block mb-2">Name</label>
-                        <input type="text" name="name" class="form-input w-full p-2 border rounded" required>
+                        <label class="block mb-2">First Name</label>
+                        <input type="text" name="name" placeholder="Enter your first name" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Last Name</label>
+                        <input type="text" name="name" placeholder="Enter your last name" class="form-input w-full p-2 border rounded" required>
                     </div>
                     <div>
                         <label class="block mb-2">Email</label>
-                        <input type="email" name="email" class="form-input w-full p-2 border rounded" required>
+                        <input type="email" name="email" placeholder="abc@example.com" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            name="phone" 
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            minlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                            placeholder="Enter a valid phone number"
+                            class="form-input w-full p-2 border rounded" 
+                            required
+                        >
                     </div>
                     <div>
                         <label class="block mb-2">Service</label>
@@ -117,7 +136,7 @@
                     </div>
                     <div>
                         <label class="block mb-2">Size</label>
-                        <select name="service" class="form-input w-full p-2 border rounded" required>
+                        <select name="size" class="form-input w-full p-2 border rounded" required>
                             <option value="">Select a size</option>
                             <option>Jumbo</option>
                             <option>Medium</option>
@@ -131,16 +150,24 @@
                     </div>
                     <div>
                         <label class="block mb-2">Preferred Time</label>
-                        <input type="time" name="time" class="form-input w-full p-2 border rounded" required>
+                        <select name="time" class="form-input w-full p-2 border rounded" required>
+                            <option value="">Select prefered time</option>
+                            <option value="07:00">7:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="15:00">3:00 PM</option>
+                        </select>
                     </div>
+                </div>
+                <div class="mt-6">
                     <button type="submit" class="w-full bg-black text-white py-3 rounded hover:bg-purple-800">
                         <span>Book Now</span>
                         <div class="spinner hidden"></div>
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Contact Section -->
     <section id="contact" class="py-16">
@@ -152,7 +179,7 @@
                 <p class="mb-4">Email: owusucobbinamary@gmail.com</p>
                 <div class="mt-8">
                     <h3 class="text-xl font-bold mb-4">Hours of Operation</h3>
-                    <p>Saturdays, Sundays and Holidays: 9:00 AM - 7:00 PM</p>
+                    <p>Saturdays, Sundays and Holidays: 7:00 AM - 7:00 PM</p>
                     <p>Weekdays: Closed</p>
                 </div>
             </div>
