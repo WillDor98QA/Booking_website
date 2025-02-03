@@ -1,0 +1,83 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Kreation - Admin</title>
+    <link rel="stylesheet" href="{% static '/css/overall.css' %}">
+   
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="dashboard">Dashboard</a></li>
+                <li><a href="{% url 'pendingBookings'%}">Pending Bookings</a></li>
+                <li><a href={% url 'confirmedBookings'%}>Confirmed Bookings</a></li>
+                <li><a href={% url 'cancelledBookings'%}>Cancelled Bookings</a></li>
+                <li><a href={% url 'completedBookings'%}>Completed Bookings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="changePasswordBtn">Change Password</button>
+                <button id="logout_user/">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>Dashboard</h1>
+            <div class="stats-grid">
+                <div class="stat-card pending">
+                    <h3>Pending Bookings</h3>
+                    <p class="stat-number" id="pendingCount">{{ pending_count}}</p>
+                </div>
+                <div class="stat-card confirmed">
+                    <h3>Confirmed Bookings</h3>
+                    <p class="stat-number" id="confirmedCount">{{ confirmed_count}}</p>
+                </div>
+                <div class="stat-card cancelled">
+                    <h3>Cancelled Bookings</h3>
+                    <p class="stat-number" id="cancelledCount">{{ cancelled_count}}</p>
+                </div>
+                <div class="stat-card completed">
+                    <h3>Completed Bookings</h3>
+                    <p class="stat-number" id="completedCount">{{ completed_count}}</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}
+</body>
+</html>
+
