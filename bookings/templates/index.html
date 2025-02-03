@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crown Kreation</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    
+    
+    {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css'  %}">
+
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="Screenshot 2025-01-02 at 10.58.33 AM.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
@@ -16,7 +21,9 @@
             <!-- Logo and Brand Name -->
             <div class="flex items-center space-x-3">
                 <div class="logo-container">
-                    <img src="Screenshot 2025-01-02 at 10.58.33 AM.png" alt="Crown & Glory Logo" class="w-12 h-12 object-contain">
+                    <img alt="Crown & Glory Logo" class="w-12 h-12 object-contain"  src="{% static '/img/logo.png' %}">
+                    
+                    
                 </div>
                 <h1 class="text-2xl font-bold">Crown Kreation</h1>
             </div>
@@ -35,6 +42,7 @@
                 </svg>
             </button>
         </div>
+       
 
         <!-- Mobile Menu Dropdown -->
         <div class="mobile-menu-dropdown hidden bg-black mt-4 p-4" id="mobileMenu">
@@ -96,15 +104,17 @@
     <div class="container mx-auto">
         <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
         <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-            <form id="bookingForm">
+            
+            <form id="bookingForm" method="POST" >
+                {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block mb-2">First Name</label>
-                        <input type="text" name="name" placeholder="Enter your first name" class="form-input w-full p-2 border rounded" required>
+                        <input type="text" name="firstname" placeholder="Enter your first name" class="form-input w-full p-2 border rounded" required>
                     </div>
                     <div>
                         <label class="block mb-2">Last Name</label>
-                        <input type="text" name="name" placeholder="Enter your last name" class="form-input w-full p-2 border rounded" required>
+                        <input type="text" name="lastname" placeholder="Enter your last name" class="form-input w-full p-2 border rounded" required>
                     </div>
                     <div>
                         <label class="block mb-2">Email</label>
@@ -128,20 +138,20 @@
                         <label class="block mb-2">Service</label>
                         <select name="service" class="form-input w-full p-2 border rounded" required>
                             <option value="">Select a service</option>
-                            <option>Box Braids</option>
-                            <option>Faux locs</option>
-                            <option>Goddess Braids</option>
-                            <option>Knotless Braids</option>
+                            <option value="1">Box Braids</option>
+                            <option value="2">Faux Locks</option>
+                            <option value="3">Goddess Braids</option>
+                            <option value="4">Knotless Braids</option>
                         </select>
                     </div>
                     <div>
                         <label class="block mb-2">Size</label>
                         <select name="size" class="form-input w-full p-2 border rounded" required>
                             <option value="">Select a size</option>
-                            <option>Jumbo</option>
-                            <option>Medium</option>
-                            <option>Small</option>
-                            <option>Extra Small</option>
+                            <option value="Jumbo">Jumbo</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Small">Small</option>
+                            <option value="Extra Small">Extra Small</option>
                         </select>
                     </div>
                     <div>
@@ -152,9 +162,9 @@
                         <label class="block mb-2">Preferred Time</label>
                         <select name="time" class="form-input w-full p-2 border rounded" required>
                             <option value="">Select prefered time</option>
-                            <option value="07:00">7:00 AM</option>
-                            <option value="11:00">11:00 AM</option>
-                            <option value="15:00">3:00 PM</option>
+                            <option value="07:00:00">7:00 AM</option>
+                            <option value="11:00:00">11:00 AM</option>
+                            <option value="15:00:00">3:00 PM</option>
                         </select>
                     </div>
                 </div>
@@ -189,13 +199,14 @@
     <!-- Footer -->
     <footer class="bg-black text-white py-8">
         <div class="container mx-auto text-center">
-            <p>&copy; 2025 Crown Kreation. All rights reserved.</p>
+            <p>&copy; {{ currentYear }} Crown Kreation. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast" role="alert"></div>
 
-    <script src="script.js"></script>
+    {% comment %} <script src="script.js"></script> {% endcomment %}
+    {% comment %} <script src="{% static 'js/script.js' %}"></script>  {% endcomment %}
 </body>
 </html>
