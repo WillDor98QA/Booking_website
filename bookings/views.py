@@ -161,5 +161,5 @@ def Login(request):
 # @login_required
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('accounts/login')
 

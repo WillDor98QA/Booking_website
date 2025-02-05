@@ -92,3 +92,23 @@ class Timeslots(models.Model):
     class Meta:
         managed = False
         db_table = 'Timeslots'
+
+
+
+
+class ConfirmedBookings(models.Model):
+    appointmentID = models.OneToOneField('Appointments', on_delete=models.CASCADE, primary_key=True)
+    clientID = models.IntegerField()
+    serviceID = models.ForeignKey('Services', on_delete=models.CASCADE)
+    appointment_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    email = models.EmailField(max_length=50)
+    phoneNumber = models.CharField(max_length=10, null=True, blank=True)
+    appointment_time = models.DateTimeField()
+    status = models.CharField(max_length=10, choices=[('Confirmed', 'Confirmed')], default='Confirmed')
+
+    class Meta:
+        verbose_name_plural = "Confirmed Bookings"
+

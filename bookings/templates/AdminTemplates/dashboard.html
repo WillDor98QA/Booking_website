@@ -26,7 +26,7 @@
             </ul>
             <div class="sidebar-footer">
                 <button id="changePasswordBtn">Change Password</button>
-                <button id="logout_user/">Logout</button>
+                <button id="logoutBtn"><a href= {% url 'logout_user' %}>Logout</a></button>
             </div>
         </nav>
 
@@ -51,8 +51,45 @@
                     <p class="stat-number" id="completedCount">{{ completed_count}}</p>
                 </div>
             </div>
+
+            <table class="bookings-table" id="bookingsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Size</th>
+                        <th>Preferred Date</th>
+                        <th>Preferred Time</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                    <td>{{ appointment.firstname}} {{ appointment.lastname }}</td>
+                    <td>{{ appointment.email}} </td>
+                    <td>{{ appointment.phoneNumber}}  </td>
+                    <td>{{ appointment.serviceID.serviceName}} </td>
+                    <td>{{ appointment.serviceID.size_options}}</td>
+                    <td>{{ appointment.appointment_time}} </td>
+                    <td>{{ appointment.appointment_time}} </td>
+                    <td>{{ appointment.created_at}} </td>
+                    <td>{{ appointment.status}} </td>
+                    
+        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </main>
+
+        
     </div>
+
+   
 
     <!-- Change Password Modal -->
     <div id="passwordModal" class="modal">

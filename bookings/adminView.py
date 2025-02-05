@@ -1,3 +1,4 @@
+import django.http
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, FileResponse
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -24,18 +25,20 @@ from django.shortcuts import get_object_or_404
 
 
 
-
+@login_required
 def dashboard(request):
     template = loader.get_template('AdminTemplates/dashboard.html')
-    pending_count = Appointments.objects.all().count() 
+    pending_count   = Appointments.objects.all().count() 
     confirmed_count =  Appointments.objects.all().count() 
     cancelled_count =Appointments.objects.all().count() 
     completed_count = Appointments.objects.all().count() 
+    pending_List    = Appointments.objects.all()
     
     
     
     
     context = {
+        "appointments" : pending_List,
         "pending_count" :pending_count,
         "confirmed_count" : confirmed_count,
         "cancelled_count" : cancelled_count,
@@ -43,12 +46,12 @@ def dashboard(request):
     }
     return HttpResponse(template.render(context, request))
 
-
+@login_required
 def pendingBookings(request):
     template = loader.get_template('AdminTemplates/pending.html')
     
     pending_count = Appointments.objects.all().count() 
-    pending_List = Appointments.objects.all()
+    pending_List  = Appointments.objects.all()
     context = {
         "pending_count" :pending_count,
         "appointments" : pending_List,
@@ -56,6 +59,7 @@ def pendingBookings(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
 def confirmedBookings(request):
     template = loader.get_template('AdminTemplates/confirmed.html')
     confirmed_count =  Appointments.objects.all().count()
@@ -66,6 +70,7 @@ def confirmedBookings(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def completedBookings(request):
     
     template = loader.get_template('AdminTemplates/completed.html')
@@ -77,6 +82,8 @@ def completedBookings(request):
     }
     return HttpResponse(template.render(context, request))
 
+
+@login_required
 def cancelledBookings(request):
     template = loader.get_template('AdminTemplates/cancelled.html')
     cancelled_count =Appointments.objects.all().count()
