@@ -1,4 +1,5 @@
-import django.http
+
+
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, FileResponse
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,6 @@ from django.utils.timezone import now
 from django.utils.deprecation import MiddlewareMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import PermissionDenied
-
 from django.shortcuts import get_object_or_404
 
 
@@ -28,11 +28,11 @@ from django.shortcuts import get_object_or_404
 @login_required
 def dashboard(request):
     template = loader.get_template('AdminTemplates/dashboard.html')
-    pending_count   = Appointments.objects.all().count() 
+    pending_count   =  Appointments.objects.all().count() 
     confirmed_count =  Appointments.objects.all().count() 
-    cancelled_count =Appointments.objects.all().count() 
-    completed_count = Appointments.objects.all().count() 
-    pending_List    = Appointments.objects.all()
+    cancelled_count =  Appointments.objects.all().count() 
+    completed_count =  Appointments.objects.all().count() 
+    pending_List    =  Appointments.objects.all()
     
     
     
