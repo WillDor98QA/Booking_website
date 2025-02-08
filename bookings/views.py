@@ -145,9 +145,9 @@ def Login(request):
             return redirect('Login')
         
         login(request,user)
-        template2 = loader.get_template('AdminTemplates/dashboard.html')
-        # return redirect('dashboard')
-        return HttpResponse(template2.render(context, request))
+        
+        return redirect('/dashboard/')
+        
         
         
         
@@ -161,5 +161,5 @@ def Login(request):
 # @login_required
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect('accounts/login')
+    return HttpResponseRedirect(reverse(Login))
 

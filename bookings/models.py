@@ -45,7 +45,7 @@ class Services(models.Model):
 
 class Appointments(models.Model):
     appointmentid = models.AutoField(db_column='appointmentID', primary_key=True)
-    clientid = models.IntegerField(db_column='clientID')
+    clientID = models.IntegerField(db_column='clientID')
     serviceID = models.ForeignKey(Services, on_delete=models.CASCADE, db_column='serviceID')
     appointment_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
