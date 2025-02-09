@@ -66,8 +66,12 @@
                     <td>{{ appointment.appointment_time}} </td>
                     <td>{{ appointment.created_at}} </td>
                     <td>{{ appointment.status}} </td>
-                    <td></td>
-                    
+                    <td>
+                        <div class="action-buttons-container">
+                            <button class="confirm-btn">✔</button>
+                            <button class="cancel-btn">❌</button>
+                        </div>
+                    </td>
 
                     </tr>
                     {% endfor %}
@@ -98,6 +102,17 @@
             </form>
         </div>
     </div>
+
+     <!-- Custom Alert -->
+<div id="customAlert" class="custom-alert hidden">
+    <div class="alert-content">
+        <span id="alertMessage"></span>
+        <div class="alert-buttons">
+            <button id="alertOkBtn" class="alert-btn">OK</button>
+            <button id="alertCancelBtn" class="alert-btn" style="display: none;">Cancel</button>
+        </div>
+    </div>
+</div>
 
     
     {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}
