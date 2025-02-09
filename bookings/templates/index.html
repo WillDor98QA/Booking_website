@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crown Kreation</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    
-    
-    {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css'  %}">
+    
+    
+   
+    
+    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
@@ -29,10 +31,10 @@
             </div>
             
             <!-- Desktop Menu - right-aligned -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#services" class="hover:text-purple-200 transition-colors duration-200">Services</a>
-                <a href="#booking" class="hover:text-purple-200 transition-colors duration-200">Book Now</a>
-                <a href="#contact" class="hover:text-purple-200 transition-colors duration-200">Contact</a>
+            <div class="hidden md:flex items-center space-x-6" >
+                <a href="#services" style="color: white; text-decoration: none;" class="hover:text-purple-200 transition-colors duration-200">Services</a>
+                <a href="#booking"  style="color: white; text-decoration: none;" class="hover:text-purple-200 transition-colors duration-200">Book Now</a>
+                <a href="#contact"  style="color: white; text-decoration: none;" class="hover:text-purple-200 transition-colors duration-200">Contact</a>
             </div>
 
             <!-- Mobile Menu Button - right-aligned -->
@@ -104,9 +106,17 @@
 <!-- Booking Section -->
 <section id="booking" class="bg-purple-100 py-16">
     <div class="container mx-auto">
+       
         <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
         <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-            
+             <!-- Display error/success messages -->
+        {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
             <form id="bookingForm" method="POST" >
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -211,7 +221,8 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast" role="alert"></div>
 
-    {% comment %} <script src="script.js"></script> {% endcomment %}
+    <script src="{% static  'js/bootstrap.bundle.min.js' %}"></script>
     {% comment %} <script src="{% static 'js/script.js' %}"></script>  {% endcomment %}
+
 </body>
 </html>
