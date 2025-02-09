@@ -22,16 +22,24 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 
 
+#global variables
+currentYear = datetime.now().strftime("%Y")
+currentDate = datetime.today().strftime("%Y-%m-%d")
+currentTimestamp = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
+
+
 
 
 
 @login_required
 def dashboard(request):
     template = loader.get_template('AdminTemplates/dashboard.html')
-    pending_count   =  Appointments.objects.all().count() 
-    confirmed_count =  Appointments.objects.all().count() 
-    cancelled_count =  Appointments.objects.all().count() 
-    completed_count =  Appointments.objects.all().count() 
+    appointments = Appointments.objects.all()
+    
+    pending_count   =  Appointments.objects.filter(status='pending').count() 
+    confirmed_count = Appointments.objects.filter(status='confirmed').count()
+    cancelled_count =  Appointments.objects.filter(status='cancelled').count() 
+    completed_count =  Appointments.objects.filter(status='completed').count() 
     pending_List    =  Appointments.objects.all()
     
     
@@ -46,14 +54,16 @@ def dashboard(request):
     }
     return HttpResponse(template.render(context, request))
 
+
+
 @login_required
 def pendingBookings(request):
     template = loader.get_template('AdminTemplates/pending.html')
     
-    pending_count = Appointments.objects.all().count() 
-    pending_List  = Appointments.objects.all()
+    
+    pending_List  = Appointments.objects.filter(status='pending')
     context = {
-        "pending_count" :pending_count,
+    
         "appointments" : pending_List,
         
     }
@@ -62,9 +72,9 @@ def pendingBookings(request):
 @login_required
 def confirmedBookings(request):
     template = loader.get_template('AdminTemplates/confirmed.html')
-    confirmed_count =  Appointments.objects.all().count()
+    confirmed_list =  Appointments.objects.filter(status='confirmed')
     context = {
-        "confirmed_count" : confirmed_count,
+        "appointments" : confirmed_list,
         
     }
     return HttpResponse(template.render(context, request))
@@ -74,10 +84,11 @@ def confirmedBookings(request):
 def completedBookings(request):
     
     template = loader.get_template('AdminTemplates/completed.html')
-    completed_count = Appointments.objects.all().count() 
+    
+    completed_count = Appointments.objects.filter(status='completed')
     context = {
         
-        "completed_count" : completed_count,
+        "appointments" : completed_count,
         
     }
     return HttpResponse(template.render(context, request))
@@ -86,9 +97,9 @@ def completedBookings(request):
 @login_required
 def cancelledBookings(request):
     template = loader.get_template('AdminTemplates/cancelled.html')
-    cancelled_count =Appointments.objects.all().count()
+    cancelled_count =Appointments.objects.filter(status='cancelled')
     context = {
-        "cancelled_count" : cancelled_count,
+        "appointments" : cancelled_count,
     }
     return HttpResponse(template.render(context, request))
 
