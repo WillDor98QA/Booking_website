@@ -50,11 +50,25 @@
                         <th>Preferred Date</th>
                         <th>Preferred Time</th>
                         <th>Created At</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Table content will be populated by JavaScript -->
+                    {% for appointment in appointments %}
+                    <tr>
+                    <td>{{ appointment.firstname}} {{ appointment.lastname }}</td>
+                    <td>{{ appointment.email}} </td>
+                    <td>{{ appointment.phoneNumber}}  </td>
+                    <td>{{ appointment.serviceID.servicename}} </td>
+                    <td>{{ appointment.serviceID.size_options}}</td>
+                    <td>{{ appointment.appointment_time}} </td>
+                    <td>{{ appointment.appointment_time}} </td>
+                    <td>{{ appointment.created_at}} </td>
+                    <td>{{ appointment.status}} </td>
+                    
+
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </main>
