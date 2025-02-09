@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Kreation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    
+    
+    {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css'  %}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-black text-white p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo and Brand Name -->
+            <div class="flex items-center space-x-3">
+                <div class="logo-container">
+                    <img alt="Crown & Glory Logo" class="w-12 h-12 object-contain"  src="{% static '/img/logo.png' %}">
+                    
+                    
+                </div>
+                <h1 class="text-2xl font-bold">Crown Kreation</h1>
+            </div>
+            
+            <!-- Desktop Menu - right-aligned -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#services" class="hover:text-purple-200 transition-colors duration-200">Services</a>
+                <a href="#booking" class="hover:text-purple-200 transition-colors duration-200">Book Now</a>
+                <a href="#contact" class="hover:text-purple-200 transition-colors duration-200">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button - right-aligned -->
+            <button class="md:hidden mobile-menu" id="menuButton">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+       
+
+        <!-- Mobile Menu Dropdown -->
+        <div class="mobile-menu-dropdown hidden bg-black mt-4 p-4" id="mobileMenu">
+            <a href="#services" class="block py-2">Services</a>
+            <a href="#booking" class="block py-2">Book Now</a>
+            <a href="#contact" class="block py-2">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-purple-100 py-20">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Expert Hair Braiding & Sales</h2>
+            <p class="text-xl mb-8">Transform your look with our professional braiding services</p>
+            <a href="#booking" class="bg-black text-white px-8 py-3 rounded-full hover:bg-purple-800">Book Appointment</a>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="service-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Braiding Styles</h3>
+                    <ul class="space-y-2">
+                        <li>Box Braids</li>
+                        <li>Faux locs</li>
+                        <li>Goddess Braids</li>
+                        <li>Knotless Braids</li>
+                        <li>Coco Twist</li>
+                        <li>Kinky Twist</li>
+                        <li>Marley Twist</li>
+                    </ul>
+                </div>
+                <div class="service-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Hair Sales</h3>
+                    <ul class="space-y-2">
+                        <li>Human Hair Extensions</li>
+                        <li>Accessories</li>
+                    </ul>
+                </div>
+                <div class="service-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Other Services</h3>
+                    <ul class="space-y-2">
+                        <li>Wig Making</li>
+                        <li>Hair Revamp</li>
+                        <li>Reconstruction</li>
+                        <li>Ventilation</li>
+                        <li>Closure/Frontal Replacement</li>
+                        <li>Pony Tail</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Booking Section -->
+<section id="booking" class="bg-purple-100 py-16">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+            
+            <form id="bookingForm" method="POST" >
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block mb-2">First Name</label>
+                        <input type="text" name="firstname" placeholder="Enter your first name" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Last Name</label>
+                        <input type="text" name="lastname" placeholder="Enter your last name" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Email</label>
+                        <input type="email" name="email" placeholder="abc@example.com" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            name="phone" 
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            minlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                            placeholder="Enter a valid phone number"
+                            class="form-input w-full p-2 border rounded" 
+                            required
+                        >
+                    </div>
+                    <div>
+                        <label class="block mb-2">Service</label>
+                        <select name="service" class="form-input w-full p-2 border rounded" required>
+                            <option value="">Select a service</option>
+                            <option value="1">Box Braids</option>
+                            <option value="2">Faux Locks</option>
+                            <option value="3">Goddess Braids</option>
+                            <option value="4">Knotless Braids</option>
+                            <option value="7">Coco Twist</option>
+                            <option value="8">Kinky Twist</option>
+                            <option value="9">Marley Twist</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Size</label>
+                        <select name="size" class="form-input w-full p-2 border rounded" required>
+                            <option value="">Select a size</option>
+                            <option value="Jumbo">Jumbo</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Small">Small</option>
+                            <option value="Extra Small">Extra Small</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Preferred Date</label>
+                        <input type="date" name="date" class="form-input w-full p-2 border rounded" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Preferred Time</label>
+                        <select name="time" class="form-input w-full p-2 border rounded" required>
+                            <option value="">Select prefered time</option>
+                            <option value="07:00:00">7:00 AM</option>
+                            <option value="11:00:00">11:00 AM</option>
+                            <option value="15:00:00">3:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-black text-white py-3 rounded hover:bg-purple-800">
+                        <span>Book Now</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
+            <div class="max-w-lg mx-auto">
+                <p class="mb-4">Location: Pokuase</p>
+                <p class="mb-4">Phone: (233) 55-644-8641/ 20-396-1506</p>
+                <p class="mb-4">Email: owusucobbinamary@gmail.com</p>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold mb-4">Hours of Operation</h3>
+                    <p>Saturdays, Sundays and Holidays: 7:00 AM - 7:00 PM</p>
+                    <p>Weekdays: Closed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; {{ currentYear }} Crown Kreation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert"></div>
+
+    {% comment %} <script src="script.js"></script> {% endcomment %}
+    {% comment %} <script src="{% static 'js/script.js' %}"></script>  {% endcomment %}
+</body>
+</html>
