@@ -308,3 +308,49 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('exportCSV').addEventListener('click', exportToCSV);
     document.getElementById('exportExcel').addEventListener('click', exportToExcel);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const customAlert = document.getElementById('customAlert');
+    const alertMessage = document.getElementById('alertMessage');
+    const alertOkBtn = document.getElementById('alertOkBtn');
+    const alertCancelBtn = document.getElementById('alertCancelBtn');
+
+    // Function to show the custom alert
+    function showAlert(message, isConfirmation = false) {
+        alertMessage.textContent = message;
+        alertCancelBtn.style.display = isConfirmation ? 'block' : 'none';
+        customAlert.classList.remove('hidden');
+    }
+
+    // Function to hide the custom alert
+    function hideAlert() {
+        customAlert.classList.add('hidden');
+    }
+
+    // Handle "Confirm" button clicks
+    document.querySelectorAll('.confirm-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const row = event.target.closest('tr'); // Get the closest table row
+            showAlert(`Booking confirmed for ${row.cells[0].textContent}`);
+            alertOkBtn.onclick = hideAlert; // Close the alert when OK is clicked
+        });
+    });
+
+    // Handle "Cancel" button clicks
+    document.querySelectorAll('.cancel-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const row = event.target.closest('tr'); // Get the closest table row
+            showAlert(`Are you sure you want to cancel the booking for ${row.cells[0].textContent}?`, true);
+
+            // Set up buttons for confirmation
+            alertOkBtn.onclick = () => {
+                row.remove(); // Remove the row from the table
+                hideAlert(); // Hide the alert
+                showAlert('Booking canceled successfully.');
+                alertOkBtn.onclick = hideAlert; // Reset OK button behavior
+            };
+
+            alertCancelBtn.onclick = hideAlert; // Close the alert when Cancel is clicked
+        });
+    });
+});
