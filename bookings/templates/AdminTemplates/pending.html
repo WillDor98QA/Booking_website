@@ -26,7 +26,7 @@
             </ul>
             <div class="sidebar-footer">
                 <button id="changePasswordBtn">Change Password</button>
-                <button id="logoutBtn">Logout</button>
+                <button id="logoutBtn"><a href= {% url 'logout_user' %}>Logout</a></button>
             </div>
         </nav>
 
@@ -50,6 +50,7 @@
                         <th>Preferred Date</th>
                         <th>Preferred Time</th>
                         <th>Created At</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -65,6 +66,7 @@
                     <td>{{ appointment.appointment_time}} </td>
                     <td>{{ appointment.created_at}} </td>
                     <td>{{ appointment.status}} </td>
+                    <td></td>
                     
 
                     </tr>

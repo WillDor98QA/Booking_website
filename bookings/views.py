@@ -15,8 +15,6 @@ from .adminView import *
 from datetime import datetime , date
 from django.utils import timezone
 from django.utils.timezone import now
-import uuid
-
 
 from django.utils.deprecation import MiddlewareMixin
 from django.views.decorators.csrf import csrf_exempt
@@ -52,40 +50,40 @@ class CsrfMiddleware(MiddlewareMixin):
 # booking functionality
 def bookings(request):
     
-    print("Bookings view function called")
+    currentYear = now().year  # Get the current year 
 
     default_bk_status = "Pending"
+    
+    # template = loader.get_template('index.html')
     template = "index.html"
+    
+    
+
+
+    
 
     if request.method == "POST":
-        # Get data from POST request
+        #get data from POST request
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        service_id = request.POST.get('service')
+        service = request.POST.get('service')
         size = request.POST.get('size')
         appoint_date = request.POST.get('date')
         appoint_time = request.POST.get('time')
+        
+        
+        # Get the service instance
+        service = get_object_or_404(Services, pk=service)
 
         # Validate required fields
         if not (firstname and lastname and email and phone and appoint_date and appoint_time):
             return HttpResponse("Missing required fields.", status=400)
 
+        # Create an appointment entry
         try:
-            # Get the service instance
-            # service = Services.objects.get(pk=service_id)
-            service = get_object_or_404(Services, pk=service_id)
-
-        except Services.DoesNotExist:
-            return HttpResponse("Service not found.", status=404)
-
-        try:
-            client_id = str(uuid.uuid4().int)[:9]
-
-            # Create an appointment entry
-            appointment = Appointments.objects.create(
-               
+            Appointments.objects.create(
                 firstname=firstname,
                 lastname=lastname,
                 email=email,
@@ -97,23 +95,20 @@ def bookings(request):
                 created_at=now(),
                 status=default_bk_status
             )
+            
             message = "Booking created successfully!"
         except Exception as e:
             return HttpResponse(f"Error creating booking: {e}", status=500)
-        
-        # Context data for rendering the template
-    bookings = Appointments.objects.all()
-
 
     # Context data for rendering the template
+    bookings = Appointments.objects.all()
+    
     context = {
         'currentYear': currentYear,
         'bookings': bookings
-
     }
-
-    return render(request, template,context)
-
+    # print(appoint_time)
+    return render(request,template,context)
         
             
         
@@ -150,9 +145,9 @@ def Login(request):
             return redirect('Login')
         
         login(request,user)
-        template2 = loader.get_template('AdminTemplates/dashboard.html')
-        # return redirect('dashboard')
-        return HttpResponse(template2.render(context, request))
+        
+        return redirect('/dashboard/')
+        
         
         
         
@@ -166,5 +161,5 @@ def Login(request):
 # @login_required
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse(Login))
 

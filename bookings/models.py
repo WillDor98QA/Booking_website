@@ -1,9 +1,5 @@
 from django.db import models
 
-import random
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-
 # class Clients(models.Model):
 #     clientid = models.AutoField(db_column='clientID', primary_key=True)
 #     firstname = models.CharField(max_length=100)
@@ -41,7 +37,7 @@ class Services(models.Model):
         return self.servicename
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'Services'
 
 
@@ -49,7 +45,7 @@ class Services(models.Model):
 
 class Appointments(models.Model):
     appointmentid = models.AutoField(db_column='appointmentID', primary_key=True)
-    clientid = models.IntegerField(db_column='clientID')
+    clientID = models.IntegerField(db_column='clientID')
     serviceID = models.ForeignKey(Services, on_delete=models.CASCADE, db_column='serviceID')
     appointment_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -78,7 +74,7 @@ class Appointments(models.Model):
         return f"{self.firstname} {self.lastname}"
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'Appointments'
 
 
@@ -94,7 +90,25 @@ class Timeslots(models.Model):
         return f"Timeslot {self.timeslotid}"
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'Timeslots'
 
+
+
+
+class ConfirmedBookings(models.Model):
+    appointmentID = models.OneToOneField('Appointments', on_delete=models.CASCADE, primary_key=True)
+    clientID = models.IntegerField()
+    serviceID = models.ForeignKey('Services', on_delete=models.CASCADE)
+    appointment_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    email = models.EmailField(max_length=50)
+    phoneNumber = models.CharField(max_length=10, null=True, blank=True)
+    appointment_time = models.DateTimeField()
+    status = models.CharField(max_length=10, choices=[('Confirmed', 'Confirmed')], default='Confirmed')
+
+    class Meta:
+        verbose_name_plural = "Confirmed Bookings"
 
