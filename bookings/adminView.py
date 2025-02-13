@@ -37,7 +37,7 @@ def dashboard(request):
     appointments = Appointments.objects.all()
     
     pending_count   =  Appointments.objects.filter(status='pending').count() 
-    confirmed_count = Appointments.objects.filter(status='confirmed').count()
+    confirmed_count =  Appointments.objects.filter(status='confirmed').count()
     cancelled_count =  Appointments.objects.filter(status='cancelled').count() 
     completed_count =  Appointments.objects.filter(status='completed').count() 
     pending_List    =  Appointments.objects.all()
@@ -62,6 +62,7 @@ def pendingBookings(request):
     
     
     pending_List  = Appointments.objects.filter(status='pending')
+    
     context = {
     
         "appointments" : pending_List,
@@ -104,3 +105,36 @@ def cancelledBookings(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
+def update_appointment_status(request, appointment_id, action):
+    appointment = get_object_or_404(Appointments, pk=appointment_id)
+
+    if action == "confirm":
+        message = "Appointment Confirmed!"
+        messages.success(request, message)
+        appointment.status = "Confirmed"
+    elif action == "cancel":
+        message = "Appointment Cancelled!"
+        messages.error(request, message)
+        appointment.status = "Cancelled"
+
+    appointment.save()
+    return redirect('/dashboard/pendingBookings/')
+
+
+@login_required
+def complete_appointment(request, appointment_id, action):
+    appointment = get_object_or_404(Appointments, pk=appointment_id)
+
+    if action == "complete":
+        message = "Appointment Completed!"
+        messages.success(request, message)
+        appointment.status = "Completed"
+        
+    elif action == "cancel":
+        message = "Appointment Cancelled!"
+        messages.error(request, message)
+        appointment.status = "Cancelled"
+
+    appointment.save()
+    return redirect('/dashboard/confirmedBookings/')
