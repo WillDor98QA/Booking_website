@@ -54,7 +54,7 @@ class Appointments(models.Model):
     email = models.EmailField( max_length=50)
     phoneNumber = models.CharField(db_column='phoneNumber', max_length=10, null=True, blank=True)
     created_at = models.DateTimeField(db_column='created_at', auto_now_add=True)
-    appointment_time = models.DateTimeField()
+    appointment_time = models.CharField(max_length=100)
     
     status = models.CharField(
         max_length=10,

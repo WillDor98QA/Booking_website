@@ -42,7 +42,7 @@ class CsrfMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
         if isinstance(exception, PermissionDenied):
             # Redirect to login page if a CSRF error occurs
-            return redirect('login')
+            return redirect('Login')
 
 
 
@@ -63,6 +63,7 @@ def bookings(request):
     
 
     if request.method == "POST":
+        
         #get data from POST request
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
@@ -74,6 +75,8 @@ def bookings(request):
         appoint_time = request.POST.get('time')
         
         appointm_date = datetime.strptime(appoint_date, '%Y-%m-%d')
+        
+        # weeekend verification
         appoint_day = appointm_date.strftime("%A")
         if appointm_date.weekday() < 5:
             messages.error(request, "Appointment Date must be weekend!")
@@ -102,14 +105,15 @@ def bookings(request):
                     phoneNumber=phone,
                     serviceID=service,
                     # size=size,
-                    appointment_date=appoint_date,
-                    appointment_time=currentTimestamp,
+                    appointment_date=appointm_date,
+                    appointment_time=appoint_time,
                     created_at=now(),
                     status=default_bk_status
                 )
                 
                 
-                print(appoint_date)
+                print(appointm_date)
+                print(appoint_time)
 
                 message = "Booking created successfully!"
             except Exception as e:
