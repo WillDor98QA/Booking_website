@@ -7,7 +7,7 @@ import os
 firstname = 'Stanley'
 service_no = '234565'
 locker_number = '8089'
-contact = '0554706225'
+contact = '0200720509'
 # contact = '579253016'
 contacts = str(contact)
 

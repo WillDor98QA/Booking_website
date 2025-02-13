@@ -139,8 +139,11 @@ STATICFILES_DIRS = [
 ]
 
 # settings.py
-# LOGIN_URL = 'Login'  
-LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_URL = '/accounts/login/'  
+LOGIN_REDIRECT_URL = '/dashboard/pendingBookings/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect after logout
+
+
 
 
 # Default primary key field type

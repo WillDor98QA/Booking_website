@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crown Kreation - Admin</title>
     <link rel="stylesheet" href="{% static '/css/overall.css' %}">
+    
+    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
    
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
@@ -21,15 +23,15 @@
                 <h2>Admin Panel</h2>
             </div>
             <ul class="nav-links">
-                <li class="active"><a href={% url "dashboard" %}>Dashboard</a></li>
+                <li class="active"><a href="#">Dashboard</a></li>
                 <li><a href="{% url 'pendingBookings'%}">Pending Bookings</a></li>
-                <li><a href={% url 'confirmedBookings'%}>Confirmed Bookings</a></li>
-                <li><a href={% url 'cancelledBookings'%}>Cancelled Bookings</a></li>
-                <li><a href={% url 'completedBookings'%}>Completed Bookings</a></li>
+                <li><a href="{% url 'confirmedBookings'%}">Confirmed Bookings</a></li>
+                <li><a href="{% url 'cancelledBookings'%}">Cancelled Bookings</a></li>
+                <li><a href="{% url 'completedBookings'%}">Completed Bookings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <button id="changePasswordBtn">Change Password</button>
-                <button id="logoutBtn"><a href= {% url 'logout_user' %}>Logout</a></button>
+                <button id="logoutBtn"><a  style="color: white; text-decoration: none;" href= {% url 'logout_user' %}>Logout</a></button>
             </div>
         </nav>
 
@@ -78,7 +80,7 @@
                     <td>{{ appointment.phoneNumber}}  </td>
                     <td>{{ appointment.serviceID.servicename }} </td>
                     <td>{{ appointment.serviceID.size_options}}</td>
-                    <td>{{ appointment.appointment_time}} </td>
+                    <td>{{ appointment.appointment_date}} </td>
                     <td>{{ appointment.appointment_time}} </td>
                     <td>{{ appointment.created_at}} </td>
                     <td>{{ appointment.status}} </td>
