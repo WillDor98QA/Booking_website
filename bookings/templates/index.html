@@ -7,6 +7,7 @@
     <title>Crown Kreation</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static '/css/styles.css'  %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
     
     
    
@@ -109,6 +110,7 @@
        
         <h2 class="text-3xl font-bold text-center mb-12">Book Your Appointment</h2>
         <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+
              <!-- Display error/success messages -->
         {% if messages %}
         <div class="alert alert-danger" role="alert">
@@ -117,6 +119,10 @@
             {% endfor %}
         </div>
         {% endif %}
+
+
+     
+
             <form id="bookingForm" method="POST" >
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
