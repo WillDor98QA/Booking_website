@@ -1,0 +1,16 @@
+{
+    "builds":[{
+    "src":"bookinApp/wsgi.py",
+    "use":"@vercel/python",
+    "config":{"maxLambdaSize":"20mb", "runtime":"python3.11.3"}
+
+
+}],
+"routes":[
+    {
+    "src": "/(.*)",
+    "dest":"bookinApp/wsgi.py"
+
+
+}]
+}
