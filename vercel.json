@@ -2,15 +2,17 @@
     "builds":[{
     "src":"bookinApp/wsgi.py",
     "use":"@vercel/python",
-    "config":{"maxLambdaSize":"20mb", "runtime":"python3.11.3"}
+    "config": {"maxLambdaSize": "15mb", "runtime":"python3.13.2"}
 
 
 }],
-"routes":[
+
+"routes": [
     {
     "src": "/(.*)",
     "dest":"bookinApp/wsgi.py"
 
 
-}]
+}
+]
 }
