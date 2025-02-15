@@ -13,6 +13,6 @@
     "dest":"bookingApp/wsgi.py"
 
 
-}
-]
+    }
+        ]
 }
