@@ -175,12 +175,18 @@
                 confirmButtonText: 'Yes, proceed'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Appointment Confirmed!!",
+                        icon: "success",
+                        draggable: false
+                    });
                     window.location.href = `/dashboard/update-appointment/${appointmentid}/${action}/`;
                                 }
             });
         }
     </script>
-    
+
+    </script>
     {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}
     <script src="{% static  'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sweetalert2.min.js' %}"></script>
