@@ -46,6 +46,7 @@
     width: 24px;
     height: 24px;
     animation: spin 1s linear infinite;
+    margin: auto;
 }
 
 @keyframes spin {
@@ -57,19 +58,33 @@
 .toast {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    padding: 1rem;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    padding: 1rem 2rem;
     border-radius: 0.5rem;
-    background-color: #000000;
     color: white;
-    transform: translateY(100px);
-    transition: transform 0.3s ease;
+    font-size: 1rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     z-index: 1000;
+    opacity: 0;
 }
 
+/* Show the toast */
 .toast.show {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
+    opacity: 1;
 }
+
+/* Success toast */
+.toast.success {
+    background-color: #4CAF50; /* Green */
+}
+
+/* Error toast */
+.toast.error {
+    background-color: #F44336; /* Red */
+}
+
 
 /* Updated Mobile menu styles */
 @media (max-width: 768px) {
