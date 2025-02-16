@@ -354,3 +354,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+//for status changes
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".status").forEach(statusElement => {
+        let status = statusElement.getAttribute("data-status"); // Get status from data attribute
+        statusElement.classList.add(status); // Add the class dynamically
+        statusElement.textContent = status.charAt(0).toUpperCase() + status.slice(1); // Capitalize first letter
+    });
+});
