@@ -37,43 +37,64 @@
         <main class="main-content">
             <div class="header-actions">
                 <h1>Completed Bookings</h1>
-                <div class="export-buttons">
-                    <button id="exportCSV" class="export-btn">Export CSV</button>
-                    <button id="exportExcel" class="export-btn">Export Excel</button>
+            </div>
+            <div>
+                <table class="bookings-table" id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Size</th>
+                            <th>Preferred Date</th>
+                            <th>Preferred Time</th>
+                            <th>Created At</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                        <td>{{ appointment.firstname}} {{ appointment.lastname }}</td>
+                        <td>{{ appointment.email}} </td>
+                        <td>{{ appointment.phoneNumber}}  </td>
+                        <td>{{ appointment.serviceID.servicename}} </td>
+                        <td>{{ appointment.serviceID.size_options}}</td>
+                        <td>{{ appointment.appointment_date}} </td>
+                        <td>{{ appointment.appointment_time}} </td>
+                        <td>{{ appointment.created_at}} </td>
+                        <td>{{ appointment.status}} </td>
+                        
+            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-controls">
+                <div class="showing-info">
+                  Showing <span id="startIndex">1</span> to <span id="endIndex">10</span> of <span id="totalItems">50</span> results
+                </div>
+            
+                <div class="pagination-buttons">
+                  <button id="firstPage" class="page-button" title="First page">≪</button>
+                  <button id="prevPage" class="page-button" title="Previous page">＜</button>
+                  <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">5</span></span>
+                  <button id="nextPage" class="page-button" title="Next page">＞</button>
+                  <button id="lastPage" class="page-button" title="Last page">≫</button>
+                </div>
+            
+                <div class="items-per-page">
+                  <label>Items per page:</label>
+                  <select id="itemsPerPage">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
                 </div>
             </div>
-            <table class="bookings-table" id="bookingsTable">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Service</th>
-                        <th>Size</th>
-                        <th>Preferred Date</th>
-                        <th>Preferred Time</th>
-                        <th>Created At</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for appointment in appointments %}
-                    <tr>
-                    <td>{{ appointment.firstname}} {{ appointment.lastname }}</td>
-                    <td>{{ appointment.email}} </td>
-                    <td>{{ appointment.phoneNumber}}  </td>
-                    <td>{{ appointment.serviceID.servicename}} </td>
-                    <td>{{ appointment.serviceID.size_options}}</td>
-                    <td>{{ appointment.appointment_date}} </td>
-                    <td>{{ appointment.appointment_time}} </td>
-                    <td>{{ appointment.created_at}} </td>
-                    <td>{{ appointment.status}} </td>
-                    
-
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </main>
     </div>
 
