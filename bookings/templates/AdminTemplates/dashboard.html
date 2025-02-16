@@ -84,9 +84,9 @@
                             <td>{{ appointment.appointment_date}} </td>
                             <td>{{ appointment.appointment_time}} </td>
                             <td>{{ appointment.created_at}} </td>
-                            <td>{{ appointment.status}} </td>
+                            {% comment %} <td>{{ appointment.status}} </td> {% endcomment %}
                             <td>
-                                <span class="status" data-status="completed">confirmed</span>
+                                <span class="status" data-status="completed">{{ appointment.status}}</span>
                             </td>
             
             
