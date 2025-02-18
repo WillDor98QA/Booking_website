@@ -8,9 +8,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crown Kreation - Admin</title>
+
     <link rel="stylesheet" href="{% static '/css/overall.css' %}">
     
-    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}"> {% endcomment %}
    
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
@@ -71,6 +72,8 @@
                             <th>Preferred Time</th>
                             <th>Created At</th>
                             <th>Status</th>
+                            <th>Status</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -84,9 +87,15 @@
                             <td>{{ appointment.appointment_date}} </td>
                             <td>{{ appointment.appointment_time}} </td>
                             <td>{{ appointment.created_at}} </td>
-                            {% comment %} <td>{{ appointment.status}} </td> {% endcomment %}
+                            <td>{{ appointment.status}} </td>
                             <td>
-                                <span class="status" data-status="completed">{{ appointment.status}}</span>
+                                <span class="status {% if booking.status == 'pending' %}pending
+                                        {% elif booking.status == 'confirmed' %}confirmed
+                                        {% elif booking.status == 'cancelled' %}cancelled
+                                        {% elif booking.status == 'completed' %}completed
+                                        {% endif %}">
+                                {{ appointment.status|capfirst }}
+                            </span>
                             </td>
             
             

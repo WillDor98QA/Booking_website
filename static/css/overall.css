@@ -457,8 +457,7 @@ body {
         margin: 0;
     }
 }
-
-/* General styling for status boxes */
+/* General status styling */
 .status {
     display: inline-block;
     padding: 6px 12px;
@@ -468,10 +467,10 @@ body {
     font-size: 0.9rem;
     text-align: center;
     min-width: 100px;
-    color: white !important; /* Ensure text color stays white */
-    border: none; /* Remove any default borders */
-    box-shadow: none !important; /* Remove any shadow effects */
-    background-image: none !important; /* Ensure no gradient or overlay */
+    color: white !important;
+    border: none;
+    box-shadow: none !important;
+    background-image: none !important;
 }
 
 /* Colors for each status */
@@ -488,5 +487,5 @@ body {
 }
 
 .status.completed {
-    background-color: #ff9800 !important; /* Orange */
+    background-color: #ff9800 !important; /* Orange */
 }

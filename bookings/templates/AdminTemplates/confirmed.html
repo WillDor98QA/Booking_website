@@ -69,8 +69,8 @@
                             <th>Preferred Date</th>
                             <th>Preferred Time</th>
                             <th>Created At</th>
+                            <th>Confirmed Status</th>
                             <th>Action</th>
-                            <th>Completed Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,19 +88,15 @@
                             <td>
                                 <div class="action-buttons-container">
             
-                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}"
-                                        method="POST">
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}" method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="confirm-btn"
-                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
+                                        <button type="button" class="confirm-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
             
                                     </form>
             
-                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}"
-                                        method="POST">
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}" method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="cancel-btn"
-                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
+                                        <button type="button" class="cancel-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
             
                                     </form>
                                 </div>
@@ -174,9 +170,9 @@
                 confirmButtonText: 'Yes, proceed'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    if (result.isConfirmed) {
+                
                         Swal.fire({
-                            title: "Appointment Completed!!",
+                            title: `Appointment ${action}!!`,
                             icon: "success",
                             draggable: false
                         });
