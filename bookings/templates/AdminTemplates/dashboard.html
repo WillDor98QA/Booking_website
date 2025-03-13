@@ -19,6 +19,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
 </head>
 <body>
+    <!-- Loader -->
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<!-- Your admin content -->
+<div id="content" class="hidden">
+    <!-- Your entire admin dashboard goes here -->
+
     <div class="admin-container">
         <!-- Sidebar -->
         <nav class="sidebar">
@@ -34,14 +43,15 @@
             </ul>
             <div class="sidebar-footer">
                 <button id="changePasswordBtn">Change Password</button>
-                <button id="logoutBtn"><a  style="color: white; text-decoration: none;" href= {% url 'logout_user' %}>Logout</a></button>
+                <button id="logoutBtn"><a style="color: white; text-decoration: none;" href={% url 'logout_user'
+                        %}>Logout</a></button>
             </div>
         </nav>
 
         <!-- Main Content -->
         <main class="main-content">
             <h1>Dashboard</h1>
-            <div class="stats-grid" >
+            <div class="stats-grid">
                 <div class="stat-card pending">
                     <h3>Pending Bookings</h3>
                     <p class="stat-number" id="pendingCount">{{ pending_count}}</p>
@@ -96,21 +106,22 @@
                                         {% elif booking.status == 'cancelled' %}cancelled
                                         {% elif booking.status == 'completed' %}completed
                                         {% endif %}">
-                                {{ appointment.status|capfirst }}
-                            </span>
+                                    {{ appointment.status|capfirst }}
+                                        </span>
                             </td>
-            
-            
+
+
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-           
+
         </main>
 
-        
+
     </div>
+</div>
 
    
 
@@ -144,10 +155,18 @@
 
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('#bookingsTable').DataTable();
         });
-
+    
+        //loader actions
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("content").classList.remove("hidden");
+            }, 1000); // Add delay for better UX (adjust as needed)
+        });
+    
     </script>
 
     {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}

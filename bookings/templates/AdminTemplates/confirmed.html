@@ -17,6 +17,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
+    <!-- Loader -->
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<!-- Your admin content -->
+<div id="content" class="hidden">
+    <!-- Your entire admin dashboard goes here -->
+
     <div class="admin-container">
         <!-- Sidebar (same as dashboard.html) -->
         <nav class="sidebar">
@@ -32,7 +41,8 @@
             </ul>
             <div class="sidebar-footer">
                 <button id="changePasswordBtn">Change Password</button>
-                <button id="logoutBtn"><a  style="color: white; text-decoration: none;"  href= {% url 'logout_user' %}>Logout</a></button>
+                <button id="logoutBtn"><a style="color: white; text-decoration: none;" href={% url 'logout_user'
+                        %}>Logout</a></button>
             </div>
         </nav>
 
@@ -43,23 +53,23 @@
             </div>
             <div>
                 <table class="bookings-table" id="bookingsTable">
-            
+
                     <!-- Display warning/error/success messages -->
-            
+
                     {% if messages %}
                     {% for message in messages %}
                     <div class="alert shadow w100" role="alert"
                         style="background-color:
-                        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}#2ecc71
-                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}#f44336
-                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}#f7dc6f
-                        {% else %}
-                        {% endif %};color:{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}black{% else %}white{% endif %};">
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}#2ecc71
+                        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}#f44336
+                        {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}#f7dc6f
+                    {% else %}
+                    {% endif %};color:{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}black{% else %}white{% endif %};">
                         {{ message }}
                     </div>
                     {% endfor %}
                     {% endif %}
-            
+
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -88,30 +98,35 @@
                             <td>{{ appointment.status}} </td>
                             <td>
                                 <div class="action-buttons-container">
-            
-                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}" method="POST">
+
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}"
+                                        method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="confirm-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
-            
+                                        <button type="button" class="confirm-btn"
+                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
+
                                     </form>
-            
-                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}" method="POST">
+
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}"
+                                        method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="cancel-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
-            
+                                        <button type="button" class="cancel-btn"
+                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
+
                                     </form>
                                 </div>
                             </td>
-            
-            
+
+
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-           
+
         </main>
     </div>
+</div>
 
     <!-- Change Password Modal -->
     <div id="passwordModal" class="modal">
@@ -162,11 +177,20 @@
 
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('#bookingsTable').DataTable();
         });
-
+    
+        //loader actions
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("content").classList.remove("hidden");
+            }, 1000); // Add delay for better UX (adjust as needed)
+        });
+    
     </script>
+    
     {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}
     <script src="{% static  'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sweetalert2.min.js' %}"></script>

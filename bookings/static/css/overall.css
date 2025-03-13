@@ -18,11 +18,61 @@ body {
 /* Sidebar Styles */
 .sidebar {
     width: 250px;
+    height: 100vh;
     background-color: #333;
     color: white;
+    position: absolute; /* Sidebar moves with the page */
+    top: 0;
+    left: 0;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    z-index: 10; /* Ensures sidebar stays on top */
+}
+
+.sidebar a {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    margin: 5px 0;
+    text-decoration: none;
+    color: white;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.bottom-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-top: auto; /* Pushes the buttons to the bottom */
+}
+
+.bottom-buttons button {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #555;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.bottom-buttons button:hover {
+    background-color: #777;
+}
+
+.main-content {
+    margin-left: 250px; /* Pushes content to the right so it doesn't go under the sidebar */
+    padding: 20px;
+    width: calc(100% - 250px); /* Adjusts width to fit beside sidebar */
+    overflow-x: auto; /* Allows scrolling inside the content area */
 }
 
 .logo {
@@ -41,7 +91,8 @@ body {
 }
 
 .nav-links a {
-    color: white;    text-decoration: none;
+    color: white;
+    text-decoration: none;
     padding: 0.75rem 1rem;
     display: block;
     border-radius: 4px;
@@ -458,6 +509,78 @@ body {
     }
 }
 
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures full width usage */
+    width: 100%; /* Makes it cover the full width */
+    padding: 12px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fff; /* Optional: ensure background consistency */
+}
+
+.showing-info {
+    color: #666;
+    font-size: 14px;
+}
+
+.pagination-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-button {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.page-button:hover:not(:disabled) {
+    background: #f5f5f5;
+}
+
+.page-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    padding: 6px 16px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.items-per-page select {
+    padding: 6px 24px 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
 /* General styling for status boxes */
 .status {
     display: inline-block;
@@ -490,3 +613,70 @@ body {
 .status.completed {
     background-color: #ff9800 !important; /* Orange */
 }
+
+/* Loader container */
+#loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* Background to match your theme */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Ensures it's on top */
+}
+
+/* Spinner animation */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #000000; /* Blue (change color if needed) */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+/* Spin animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hide content until loader is gone */
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-250px);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Show/hide table columns */
+    .hide-mobile {
+        display: none;
+    }
+
+    /* Add hamburger menu */
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        cursor: pointer;
+    }
+}
+
