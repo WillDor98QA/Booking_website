@@ -93,8 +93,9 @@
                             <td>{{ appointment.appointment_date}} </td>
                             <td>{{ appointment.appointment_time}} </td>
                             <td>{{ appointment.created_at}} </td>
-                            <td>{{ appointment.status}} </td>
+                            {% comment %} <td>{{ appointment.status}} </td> {% endcomment %}
                             <td>
+<<<<<<< HEAD
                                 <span class="status {% if booking.status == 'pending' %}pending
                                         {% elif booking.status == 'confirmed' %}confirmed
                                         {% elif booking.status == 'cancelled' %}cancelled
@@ -102,6 +103,9 @@
                                         {% endif %}">
                                 {{ appointment.status|capfirst }}
                             </span>
+=======
+                                <span class="status" data-status="completed">{{ appointment.status}}</span>
+>>>>>>> 000d3686e420633f0bef19fc3f49860fce6c9166
                             </td>
 
 

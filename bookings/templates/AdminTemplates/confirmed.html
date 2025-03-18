@@ -147,9 +147,15 @@
                 confirmButtonText: 'Yes, proceed'
             }).then((result) => {
                 if (result.isConfirmed) {
+<<<<<<< HEAD
                 
                         Swal.fire({
                             title: `Appointment ${action}!!`,
+=======
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Appointment Completed!!",
+>>>>>>> 000d3686e420633f0bef19fc3f49860fce6c9166
                             icon: "success",
                             draggable: false
                         });
