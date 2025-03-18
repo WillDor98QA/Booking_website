@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static '/css/overall.css' %}">
     <link rel="stylesheet" type="text/css" href="{%  static '/css/sweetalert2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/datatables.min.css' %}">
 
 
     <!-- Favicon -->
@@ -69,8 +70,8 @@
                             <th>Preferred Date</th>
                             <th>Preferred Time</th>
                             <th>Created At</th>
+                            <th>Confirmed Status</th>
                             <th>Action</th>
-                            <th>Completed Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,19 +89,15 @@
                             <td>
                                 <div class="action-buttons-container">
             
-                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}"
-                                        method="POST">
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}" method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="confirm-btn"
-                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
+                                        <button type="button" class="confirm-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'complet')">✔</button>
             
                                     </form>
             
-                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}"
-                                        method="POST">
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}" method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="cancel-btn"
-                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
+                                        <button type="button" class="cancel-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
             
                                     </form>
                                 </div>
@@ -112,31 +109,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="pagination-controls">
-                <div class="showing-info">
-                    Showing <span id="startIndex">1</span> to <span id="endIndex">10</span> of <span
-                        id="totalItems">50</span> results
-                </div>
-
-                <div class="pagination-buttons">
-                    <button id="firstPage" class="page-button" title="First page">≪</button>
-                    <button id="prevPage" class="page-button" title="Previous page">＜</button>
-                    <span class="page-info">Page <span id="currentPage">1</span> of <span
-                            id="totalPages">5</span></span>
-                    <button id="nextPage" class="page-button" title="Next page">＞</button>
-                    <button id="lastPage" class="page-button" title="Last page">≫</button>
-                </div>
-
-                <div class="items-per-page">
-                    <label>Items per page:</label>
-                    <select id="itemsPerPage">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                </div>
-            </div>
+           
         </main>
     </div>
 
@@ -166,17 +139,23 @@
     <script>
         function completeAppointment(appointmentid, action) {
             Swal.fire({
-                title: `Are you sure you want to ${action} this appointment?`,
+                title: `Has the appointment been ${action}ed?`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#000000',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, proceed'
             }).then((result) => {
                 if (result.isConfirmed) {
+<<<<<<< HEAD
+                
+                        Swal.fire({
+                            title: `Appointment ${action}!!`,
+=======
                     if (result.isConfirmed) {
                         Swal.fire({
                             title: "Appointment Completed!!",
+>>>>>>> 000d3686e420633f0bef19fc3f49860fce6c9166
                             icon: "success",
                             draggable: false
                         });
@@ -185,7 +164,15 @@
             });
         }
     </script>
-    
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('#bookingsTable').DataTable();
+        });
+
+    </script>
     {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}
     <script src="{% static  'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sweetalert2.min.js' %}"></script>
