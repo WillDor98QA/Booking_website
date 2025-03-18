@@ -308,3 +308,163 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('exportCSV').addEventListener('click', exportToCSV);
     document.getElementById('exportExcel').addEventListener('click', exportToExcel);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const customAlert = document.getElementById('customAlert');
+    const alertMessage = document.getElementById('alertMessage');
+    const alertOkBtn = document.getElementById('alertOkBtn');
+    const alertCancelBtn = document.getElementById('alertCancelBtn');
+
+    // Function to show the custom alert
+    function showAlert(message, isConfirmation = false) {
+        alertMessage.textContent = message;
+        alertCancelBtn.style.display = isConfirmation ? 'block' : 'none';
+        customAlert.classList.remove('hidden');
+    }
+
+    // Function to hide the custom alert
+    function hideAlert() {
+        customAlert.classList.add('hidden');
+    }
+
+    // Handle "Confirm" button clicks
+    document.querySelectorAll('.confirm-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const row = event.target.closest('tr'); // Get the closest table row
+            showAlert(`Booking confirmed for ${row.cells[0].textContent}`);
+            alertOkBtn.onclick = hideAlert; // Close the alert when OK is clicked
+        });
+    });
+
+    // Handle "Cancel" button clicks
+    document.querySelectorAll('.cancel-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const row = event.target.closest('tr'); // Get the closest table row
+            showAlert(`Are you sure you want to cancel the booking for ${row.cells[0].textContent}?`, true);
+
+            // Set up buttons for confirmation
+            alertOkBtn.onclick = () => {
+                row.remove(); // Remove the row from the table
+                hideAlert(); // Hide the alert
+                showAlert('Booking canceled successfully.');
+                alertOkBtn.onclick = hideAlert; // Reset OK button behavior
+            };
+
+            alertCancelBtn.onclick = hideAlert; // Close the alert when Cancel is clicked
+        });
+    });
+});
+
+//for status changes
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".status").forEach(statusElement => {
+        let status = statusElement.getAttribute("data-status"); // Get status from data attribute
+        statusElement.classList.add(status); // Add the class dynamically
+        statusElement.textContent = status.charAt(0).toUpperCase() + status.slice(1); // Capitalize first letter
+    });
+});
+
+//pagination 
+document.addEventListener("DOMContentLoaded", function () {
+    let currentPage = 1;
+    let itemsPerPage = parseInt(document.getElementById("itemsPerPage").value);
+    let totalItems = 50; // Default, update dynamically when fetching data
+    let totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    const tableBody = document.querySelector("#dataTable tbody"); // Adjust selector based on your table
+
+    const startIndexSpan = document.getElementById("startIndex");
+    const endIndexSpan = document.getElementById("endIndex");
+    const totalItemsSpan = document.getElementById("totalItems");
+    const currentPageSpan = document.getElementById("currentPage");
+    const totalPagesSpan = document.getElementById("totalPages");
+
+    const firstPageBtn = document.getElementById("firstPage");
+    const prevPageBtn = document.getElementById("prevPage");
+    const nextPageBtn = document.getElementById("nextPage");
+    const lastPageBtn = document.getElementById("lastPage");
+    const itemsPerPageSelect = document.getElementById("itemsPerPage");
+
+    // Sample dataset (Replace this with real data from API)
+    const data = Array.from({ length: totalItems }, (_, i) => ({
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        phone: `+12345678${i + 1}`,
+        service: "Cleaning",
+        size: ["Small", "Medium", "Large"][i % 3],
+        preferredDate: `2025-02-${String((i % 28) + 1).padStart(2, "0")}`,
+        preferredTime: `${(i % 12) + 1}:00 ${i % 2 === 0 ? "AM" : "PM"}`,
+        createdAt: "2025-02-01 09:30 AM",
+    }));
+
+    function updatePaginationUI() {
+        totalPages = Math.ceil(data.length / itemsPerPage); // Recalculate pages
+        totalItems = data.length; // Update total items count
+
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(currentPage * itemsPerPage, totalItems);
+
+        startIndexSpan.textContent = startIndex + 1;
+        endIndexSpan.textContent = endIndex;
+        currentPageSpan.textContent = currentPage;
+        totalPagesSpan.textContent = totalPages;
+        totalItemsSpan.textContent = totalItems;
+
+        firstPageBtn.disabled = currentPage === 1;
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+        lastPageBtn.disabled = currentPage === totalPages;
+
+        renderTable(startIndex, endIndex);
+    }
+
+    function renderTable(start, end) {
+        tableBody.innerHTML = ""; // Clear previous rows
+        data.slice(start, end).forEach((item) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.email}</td>
+                <td>${item.phone}</td>
+                <td>${item.service}</td>
+                <td>${item.size}</td>
+                <td>${item.preferredDate}</td>
+                <td>${item.preferredTime}</td>
+                <td>${item.createdAt}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    firstPageBtn.addEventListener("click", function () {
+        currentPage = 1;
+        updatePaginationUI();
+    });
+
+    prevPageBtn.addEventListener("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            updatePaginationUI();
+        }
+    });
+
+    nextPageBtn.addEventListener("click", function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updatePaginationUI();
+        }
+    });
+
+    lastPageBtn.addEventListener("click", function () {
+        currentPage = totalPages;
+        updatePaginationUI();
+    });
+
+    itemsPerPageSelect.addEventListener("change", function () {
+        itemsPerPage = parseInt(this.value);
+        currentPage = 1; // Reset to first page when items per page changes
+        updatePaginationUI();
+    });
+
+    updatePaginationUI();
+});

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,8 @@ SECRET_KEY = 'django-insecure-6wluow+uxq*lb!q55ou9bb4@gjv+)@yy2!^x&s&9zxqneddv^x
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# ".vercel.app"
+ALLOWED_HOSTS = ['.vercel.app']
 ALLOWED_HOSTS = []
 
 
@@ -39,16 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookings',
+    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 ROOT_URLCONF = 'bookingApp.urls'
@@ -80,7 +85,7 @@ WSGI_APPLICATION = 'bookingApp.wsgi.application'
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
-# # }
+# }
 
 # MySQL Server
 DATABASES = {
@@ -131,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR,'static/'))
 
 STATICFILES_DIRS = [
@@ -139,8 +144,11 @@ STATICFILES_DIRS = [
 ]
 
 # settings.py
-# LOGIN_URL = 'Login'  
-LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_URL = '/accounts/login/'  
+LOGIN_REDIRECT_URL = '/dashboard/pendingBookings/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect after logout
+
+
 
 
 # Default primary key field type

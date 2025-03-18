@@ -17,6 +17,13 @@ urlpatterns=[
 	path('dashboard/completeBookings/', adminView.completedBookings, name="completedBookings"),
 	path('dashboard/cancelledBookings/', adminView.cancelledBookings, name="cancelledBookings"),
  
+
+    
+    path("dashboard/update-appointment/<int:appointment_id>/<str:action>/", adminView.update_appointment_status, name="update_appointment"),
+    path("dashboard/complete-appointment/<int:appointment_id>/<str:action>/", adminView.complete_appointment, name="complete_appointment"),
+    
+
+ 
     
 ]
 

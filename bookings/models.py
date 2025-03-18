@@ -47,14 +47,15 @@ class Appointments(models.Model):
     appointmentid = models.AutoField(db_column='appointmentID', primary_key=True)
     clientID = models.IntegerField(db_column='clientID')
     serviceID = models.ForeignKey(Services, on_delete=models.CASCADE, db_column='serviceID')
-    appointment_date = models.DateTimeField()
+    appointment_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateField()
     firstname = models.CharField(max_length=100)
     lastname = models.CharField(max_length=100)
     email = models.EmailField( max_length=50)
     phoneNumber = models.CharField(db_column='phoneNumber', max_length=10, null=True, blank=True)
     created_at = models.DateTimeField(db_column='created_at', auto_now_add=True)
-    appointment_time = models.DateTimeField()
+    appointment_time = models.CharField(max_length=100)
     
     status = models.CharField(
         max_length=10,

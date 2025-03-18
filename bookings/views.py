@@ -42,9 +42,23 @@ class CsrfMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
         if isinstance(exception, PermissionDenied):
             # Redirect to login page if a CSRF error occurs
-            return redirect('login')
+            return redirect('Login')
+
+# check if booking already exists
+def validate_booking(phone):
+    
+
+    # Check if phone no. has booked today
+    has_been_booked_today = Appointments.objects.filter(phoneNumber=phone, creation_date=currentDate).exists()
 
 
+
+    if has_been_booked_today:
+        message = "THIS USER HAS ALREADY BOOKED TODAY!"
+        return ("BOOKED", message)
+    
+    else:
+        return ("UNUSED", "USER IS UNBOOKED")
 
 
 # booking functionality
@@ -63,6 +77,7 @@ def bookings(request):
     
 
     if request.method == "POST":
+        
         #get data from POST request
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
@@ -73,32 +88,67 @@ def bookings(request):
         appoint_date = request.POST.get('date')
         appoint_time = request.POST.get('time')
         
+        appointm_date = datetime.strptime(appoint_date, '%Y-%m-%d')
         
-        # Get the service instance
-        service = get_object_or_404(Services, pk=service)
+        # weeekend verification
+        appoint_day = appointm_date.strftime("%A")
+        if appointm_date.weekday() < 5:
+            messages.error(request, "Appointment Date must be weekend!")
+            return redirect(reverse('bookings'))
+        
+       
+        if appoint_date <= date.today().strftime("%Y-%m-%d"):
+            messages.error(request, "Appointment Date must be later than current Date!")
+            return redirect(reverse('bookings'))
 
-        # Validate required fields
-        if not (firstname and lastname and email and phone and appoint_date and appoint_time):
-            return HttpResponse("Missing required fields.", status=400)
+        else:
+            # appoint_date = datetime.strptime(appoint_date, "%Y-%m-%d").date() 
+            # Get the service instance
+            service = get_object_or_404(Services, pk=service)
 
-        # Create an appointment entry
-        try:
-            Appointments.objects.create(
-                firstname=firstname,
-                lastname=lastname,
-                email=email,
-                phoneNumber=phone,
-                serviceID=service,
-                # size=size,
-                appointment_date=appoint_date,
-                appointment_time=currentTimestamp,
-                created_at=now(),
-                status=default_bk_status
-            )
+            # Validate required fields
+            if not (firstname and lastname and email and phone and appoint_date and appoint_time):
+                return HttpResponse("Missing required fields.", status=400)
+
+            # Check phone number
+            status, message = validate_booking(phone)
             
-            message = "Booking created successfully!"
-        except Exception as e:
-            return HttpResponse(f"Error creating booking: {e}", status=500)
+            
+            # If the phone has already booked used, add a message and return status
+            if status == "BOOKED":
+                messages.error(request, message)
+                return redirect('bookings')
+
+            # If the phone number has not booked, add it to the appointments table
+            if status == "UNUSED":
+                # messages.success(request, "PHONE NUMBER HAS NOT BOOKED")
+   
+
+        
+        
+                # Create an appointment entry
+                try:
+                    Appointments.objects.create(
+                        firstname=firstname,
+                        lastname=lastname,
+                        email=email,
+                        phoneNumber=phone,
+                        serviceID=service,
+                        # size=size,
+                        appointment_date=appointm_date,
+                        appointment_time=appoint_time,
+                        created_at=now(),
+                        creation_date = currentDate,
+                        status=default_bk_status
+                    )
+                    
+                    
+                    print(appointm_date)
+                    print(appoint_time)
+
+                    messages.success(request,"Booking created successfully!")
+                except Exception as e:
+                    return HttpResponse(f"Error creating booking: {e}", status=500)
 
     # Context data for rendering the template
     bookings = Appointments.objects.all()
