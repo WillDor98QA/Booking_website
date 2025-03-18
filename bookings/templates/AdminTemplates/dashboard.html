@@ -10,11 +10,15 @@
     <title>Crown Kreation - Admin</title>
 
     <link rel="stylesheet" href="{% static '/css/overall.css' %}">
-    
+
     <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/css/datatables.min.css' %}">
 
-   
+    <script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+
+
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
 </head>
@@ -99,20 +103,20 @@
                                 {{ appointment.status|capfirst }}
                             </span>
                             </td>
-            
-            
+
+
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-           
+
         </main>
 
-        
+
     </div>
 
-   
+
 
     <!-- Change Password Modal -->
     <div id="passwordModal" class="modal">

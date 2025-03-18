@@ -11,9 +11,6 @@ from django.template import loader
 
 from .models import *
 from .adminView import *
-from django.db.models import ObjectDoesNotExist
-
-
 
 from datetime import datetime , date
 from django.utils import timezone
@@ -47,48 +44,21 @@ class CsrfMiddleware(MiddlewareMixin):
             # Redirect to login page if a CSRF error occurs
             return redirect('Login')
 
-
-# def get_appointment_time(phone, appoint_time):
-#     try:
-#         appoint_time = Appointments.objects.filter(phoneNumber=phone)
-#         return appoint_time.status
-#     except ObjectDoesNotExist:
-#         return "Appointment time not found"
-
 # check if booking already exists
-def validate_booking(phone, time):
-    """
-    Validate a booking request.
+def validate_booking(phone):
+    
 
-    Args:
-        phone (str): Phone number of the user.
-        time (str): Appointment time.
+    # Check if phone no. has booked today
+    has_been_booked_today = Appointments.objects.filter(phoneNumber=phone, creation_date=currentDate).exists()
 
-    Returns:
-        tuple: A tuple containing the booking status ("BOOKED" or "UNUSED") and a message.
-    """
-    currentDate = date.today()
 
-    # Check if user has booked today
-    has_been_booked_today = Appointments.objects.filter(
-        phoneNumber=phone).exists()#, creation_date=currentDate
-   # ).exists()
 
-    # Check if time is already booked
-    existing_booking = Appointments.objects.filter(
-        appointment_time=time, creation_date=currentDate
-    ).first()
-
-    if existing_booking and (existing_booking.status != "Completed" or existing_booking.status != "Cancelled"):
-        message = "Time has been booked. Please select another time."
+    if has_been_booked_today:
+        message = "THIS USER HAS ALREADY BOOKED TODAY!"
         return ("BOOKED", message)
-    elif has_been_booked_today:
-        message = "User has already booked today!"
-        return ("BOOKED", message)
+    
     else:
-        return ("UNUSED", "User is unbooked")
-
-
+        return ("UNUSED", "USER IS UNBOOKED")
 
 
 # booking functionality
@@ -137,11 +107,11 @@ def bookings(request):
             service = get_object_or_404(Services, pk=service)
 
             # Validate required fields
-            if not (firstname and lastname and phone and appoint_date and appoint_time):
+            if not (firstname and lastname and email and phone and appoint_date and appoint_time):
                 return HttpResponse("Missing required fields.", status=400)
 
             # Check phone number
-            status, message = validate_booking(phone,appoint_time)
+            status, message = validate_booking(phone)
             
             
             # If the phone has already booked used, add a message and return status
@@ -174,7 +144,7 @@ def bookings(request):
                     
                     
                     print(appointm_date)
-                    # print(get_appointment_time(phone,appoint_time))
+                    print(appoint_time)
 
                     messages.success(request,"Booking created successfully!")
                 except Exception as e:

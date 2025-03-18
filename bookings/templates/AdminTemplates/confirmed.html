@@ -91,7 +91,7 @@
             
                                     <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}" method="POST">
                                         {% csrf_token %}
-                                        <button type="button" class="confirm-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
+                                        <button type="button" class="confirm-btn" onclick="completeAppointment('{{ appointment.appointmentid }}', 'complet')">✔</button>
             
                                     </form>
             
@@ -139,7 +139,7 @@
     <script>
         function completeAppointment(appointmentid, action) {
             Swal.fire({
-                title: `Has the appointment been ${action}?`,
+                title: `Has the appointment been ${action}ed?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#000000',
