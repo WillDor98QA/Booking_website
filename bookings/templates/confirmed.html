@@ -1,0 +1,195 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crown Kreation - Admin</title>
+    <link rel="stylesheet" href="{% static '/css/overall.css' %}">
+    <link rel="stylesheet" type="text/css" href="{%  static '/css/sweetalert2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}">
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/img/logo.png' %}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar (same as dashboard.html) -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
+                <li class="[ACTIVE-IF-PENDING]"><a href="{% url 'pendingBookings' %}">Pending Bookings</a></li>
+                <li class="[ACTIVE-IF-CONFIRMED]"><a href="#">Confirmed Bookings</a></li>
+                <li class="[ACTIVE-IF-CANCELLED]"><a href="{% url 'cancelledBookings'%}">Cancelled Bookings</a></li>
+                <li class="[ACTIVE-IF-COMPLETED]"><a href="{% url 'completedBookings'%}">Completed Bookings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="changePasswordBtn">Change Password</button>
+                <button id="logoutBtn"><a  style="color: white; text-decoration: none;"  href= {% url 'logout_user' %}>Logout</a></button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header-actions">
+                <h1>Confirmed Bookings</h1>
+            </div>
+            <div>
+                <table class="bookings-table" id="bookingsTable">
+            
+                    <!-- Display warning/error/success messages -->
+            
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert shadow w100" role="alert"
+                        style="background-color:
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}#2ecc71
+                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}#f44336
+                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}#f7dc6f
+                        {% else %}
+                        {% endif %};color:{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}black{% else %}white{% endif %};">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+            
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Size</th>
+                            <th>Preferred Date</th>
+                            <th>Preferred Time</th>
+                            <th>Created At</th>
+                            <th>Action</th>
+                            <th>Completed Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.firstname}} {{ appointment.lastname }}</td>
+                            <td>{{ appointment.email}} </td>
+                            <td>{{ appointment.phoneNumber}} </td>
+                            <td>{{ appointment.serviceID.servicename}} </td>
+                            <td>{{ appointment.serviceID.size_options}}</td>
+                            <td>{{ appointment.appointment_date}} </td>
+                            <td>{{ appointment.appointment_time}} </td>
+                            <td>{{ appointment.created_at}} </td>
+                            <td>{{ appointment.status}} </td>
+                            <td>
+                                <div class="action-buttons-container">
+            
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'complete' %}"
+                                        method="POST">
+                                        {% csrf_token %}
+                                        <button type="button" class="confirm-btn"
+                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'complete')">✔</button>
+            
+                                    </form>
+            
+                                    <form action="{% url 'complete_appointment' appointment.appointmentid 'cancel' %}"
+                                        method="POST">
+                                        {% csrf_token %}
+                                        <button type="button" class="cancel-btn"
+                                            onclick="completeAppointment('{{ appointment.appointmentid }}', 'cancel')">❌</button>
+            
+                                    </form>
+                                </div>
+                            </td>
+            
+            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-controls">
+                <div class="showing-info">
+                    Showing <span id="startIndex">1</span> to <span id="endIndex">10</span> of <span
+                        id="totalItems">50</span> results
+                </div>
+
+                <div class="pagination-buttons">
+                    <button id="firstPage" class="page-button" title="First page">≪</button>
+                    <button id="prevPage" class="page-button" title="Previous page">＜</button>
+                    <span class="page-info">Page <span id="currentPage">1</span> of <span
+                            id="totalPages">5</span></span>
+                    <button id="nextPage" class="page-button" title="Next page">＞</button>
+                    <button id="lastPage" class="page-button" title="Last page">≫</button>
+                </div>
+
+                <div class="items-per-page">
+                    <label>Items per page:</label>
+                    <select id="itemsPerPage">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function completeAppointment(appointmentid, action) {
+            Swal.fire({
+                title: `Are you sure you want to ${action} this appointment?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Appointment Completed!!",
+                            icon: "success",
+                            draggable: false
+                        });
+                    window.location.href = `/dashboard/complete-appointment/${appointmentid}/${action}/`;
+                                }
+            });
+        }
+    </script>
+    
+    {% comment %} <script src="{% static '/js/Overall.js' %}"></script> {% endcomment %}
+    <script src="{% static  'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.min.js' %}"></script>
+    
+    
+</body>
+</html>
